@@ -8,4 +8,8 @@ import { Recipe } from './recipe.model';
 })
 export class RecipesComponent {
   selectedRecipe: Recipe | undefined;
+
+  constructor() {
+    console.log(this.selectedRecipe);
+  }
 }

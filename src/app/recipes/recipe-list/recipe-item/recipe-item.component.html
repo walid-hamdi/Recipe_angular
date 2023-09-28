@@ -1,5 +1,8 @@
-<div class="card mb-2" style="width: 18rem" (click)="onSelected()">
-  <!-- Apply a fixed height to the card image -->
+<div
+  class="card mb-2"
+  style="width: 18rem; cursor: pointer"
+  (click)="onSelected()"
+>
   <img
     [src]="recipe?.imagePath"
     class="card-img-top"

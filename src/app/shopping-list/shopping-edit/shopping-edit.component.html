@@ -1,64 +1,33 @@
-<ul class="list-group">
-  <!-- Use ngFor to loop through the items in Angular -->
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    Apples
-    <span class="badge badge-primary badge-pill">
-      <button
-        class="btn btn-sm btn-warning"
-        data-toggle="modal"
-        data-target="#editItemModal"
-      >
-        Edit
-      </button>
-    </span>
-  </li>
-  <!-- Add more items as needed -->
-</ul>
-
-<!-- Edit Item Modal -->
-<div
-  class="modal fade"
-  id="editItemModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Item</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="row mt-5">
+  <div class="col-md-6">
+    <form>
+      <div class="form-group mb-3">
+        <label for="itemName">Item Name</label>
+        <input
+          type="text"
+          #inputName
+          class="form-control mt-2"
+          id="itemName"
+          placeholder="Enter item name"
+        />
       </div>
-      <div class="modal-body">
-        <!-- Edit form -->
-        <form>
-          <div class="form-group">
-            <label for="editedItem">Edit Item Name:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editedItem"
-              placeholder="Enter updated item name"
-            />
-          </div>
-        </form>
+      <div class="form-group mb-3">
+        <label for="itemAmount">Amount</label>
+        <input
+          #inputAmount
+          type="number"
+          class="form-control mt-2"
+          id="itemAmount"
+          placeholder="Enter amount"
+        />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
-          Save
+      <div>
+        <button type="button" class="btn btn-primary" (click)="onAdd()">
+          Add
         </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
+        <button type="button" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-warning">Clear</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
