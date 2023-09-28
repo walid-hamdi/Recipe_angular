@@ -12,3 +12,10 @@ export class AppComponent {
     this.loadedFeature = feature;
   }
 }
+
+/*
+ TODO: Handle the toggle dropdown btn-group
+ understand passing data between parent <=> child clearly
+ understand creating directors (listeners binding and host)
+
+*/
