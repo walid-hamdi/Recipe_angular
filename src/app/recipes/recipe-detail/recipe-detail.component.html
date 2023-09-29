@@ -21,24 +21,10 @@
   </ul>
 </div>
 
-<!-- <div class="col-md-6">
-  <h2>{{ recipe?.name }}</h2>
-  <p>{{ recipe?.description }}</p>
-
-  <h3>Ingredients:</h3>
-  <ul>
-    <li>Ingredient 1</li>
-    <li>Ingredient 2</li>
-    <li>Ingredient 3</li>
+<div class="mt-3">
+  <ul class="list-group" *ngFor="let ing of recipe?.ingredient">
+    <li class="list-group-item">
+      <span class="font-weight-bold">{{ ing.name }}</span> - {{ ing.amount }}
+    </li>
   </ul>
-
-  <h3>Instructions:</h3>
-  <ol>
-    <li>Step 1: Instruction 1</li>
-    <li>Step 2: Instruction 2</li>
-    <li>Step 3: Instruction 3</li>
-  </ol>
-
-  <h3>Additional Details:</h3>
-  <p>Additional details about the recipe can be added here.</p>
-</div> -->
+</div>
