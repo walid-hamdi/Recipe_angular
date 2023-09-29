@@ -17,5 +17,5 @@ export class AppComponent {
  TODO: Handle the toggle dropdown btn-group
  understand passing data between parent <=> child clearly
  understand creating directors (listeners binding and host)
-
+ understand dependency injection and services
 */
