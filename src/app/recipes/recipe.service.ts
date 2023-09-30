@@ -8,6 +8,7 @@ export class RecipeService {
   recipeSelected = new EventEmitter<Recipe>();
   recipes: Recipe[] = [
     new Recipe(
+      1,
       'Spaghetti Carbonara',
       'A classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.',
       'https://images.unsplash.com/photo-1588013273468-315fd88ea34c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
@@ -20,6 +21,7 @@ export class RecipeService {
       ]
     ),
     new Recipe(
+      2,
       'Chicken Alfredo',
       'Creamy pasta dish with tender chicken, garlic, and Parmesan cheese.',
       'https://images.unsplash.com/photo-1670508142255-f119391c4213?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2031&q=80',
@@ -32,6 +34,7 @@ export class RecipeService {
       ]
     ),
     new Recipe(
+      3,
       'Vegetable Stir-Fry',
       'A quick and healthy stir-fry with assorted vegetables and tofu.',
       'https://plus.unsplash.com/premium_photo-1664472637341-3ec829d1f4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80',
