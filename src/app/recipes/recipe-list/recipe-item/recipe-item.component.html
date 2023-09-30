@@ -1,6 +1,8 @@
 <div
   class="card mb-2"
   style="width: 18rem; cursor: pointer"
+  [routerLinkActive]="'bg-info text-white'"
+  [routerLink]="['/recipes/' + recipe?.id]"
   (click)="onSelected()"
 >
   <img

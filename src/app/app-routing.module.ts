@@ -5,6 +5,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { NewComponent } from './recipes/new/new.component';
+import { EditComponent } from './recipes/edit/edit.component';
 
 const routes: Routes = [
   {
@@ -18,6 +20,11 @@ const routes: Routes = [
       {
         path: '',
         component: RecipeStartComponent,
+      },
+      { path: 'new', component: NewComponent },
+      {
+        path: ':id/edit',
+        component: EditComponent,
       },
       {
         path: ':id',
