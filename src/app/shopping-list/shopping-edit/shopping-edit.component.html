@@ -1,32 +1,41 @@
 <div class="row mt-5">
   <div class="col-md-6">
-    <form>
+    <form (ngSubmit)="onAddItem(form)" #form="ngForm">
       <div class="form-group mb-3">
         <label for="itemName">Item Name</label>
         <input
           type="text"
-          #inputName
           class="form-control mt-2"
           id="itemName"
+          name="name"
           placeholder="Enter item name"
+          ngModel
+          required
         />
       </div>
       <div class="form-group mb-3">
         <label for="itemAmount">Amount</label>
         <input
-          #inputAmount
           type="number"
+          name="amount"
           class="form-control mt-2"
           id="itemAmount"
           placeholder="Enter amount"
+          ngModel
+          required
+          pattern="^[.]?[0-9]+[.]?[0-9]*$"
         />
       </div>
       <div>
-        <button type="button" class="btn btn-primary" (click)="onAdd()">
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          [disabled]="!form.valid"
+        >
           Add
         </button>
-        <button type="button" class="btn btn-danger">Delete</button>
-        <button type="button" class="btn btn-warning">Clear</button>
+        <button type="button" class="btn btn-danger me-1">Delete</button>
+        <button type="button" class="btn btn-warning me-1">Clear</button>
       </div>
     </form>
   </div>

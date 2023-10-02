@@ -11,10 +11,9 @@ import { Router } from '@angular/router';
 export class RecipeItemComponent {
   @Input() recipe: Recipe | undefined;
 
-  constructor(private recipeService: RecipeService, private router: Router) {}
+  constructor(private router: Router) {}
 
   onSelected() {
-    // this.recipeService.recipeSelected.emit(this.recipe);
     this.router.navigate(['recipes/' + this.recipe?.id]);
   }
 }

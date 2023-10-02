@@ -16,6 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { NewComponent } from './recipes/new/new.component';
 import { EditComponent } from './recipes/edit/edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { EditComponent } from './recipes/edit/edit.component';
     NewComponent,
     EditComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [ShoppingListService],
   bootstrap: [AppComponent],
 })

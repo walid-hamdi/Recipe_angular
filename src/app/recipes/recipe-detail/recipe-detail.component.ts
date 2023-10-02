@@ -9,7 +9,6 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
   styleUrls: ['./recipe-detail.component.css'],
 })
 export class RecipeDetailComponent implements OnInit {
-  // @Input() recipe: Recipe | undefined;
   recipe?: Recipe;
   recipeId?: number;
 

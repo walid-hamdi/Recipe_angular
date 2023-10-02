@@ -1,8 +1,13 @@
 <app-shopping-edit></app-shopping-edit>
 <div class="row mt-5">
   <div class="col-md-6">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ingredient of ingredients">
+    <ul class="list-group" s>
+      <li
+        style="cursor: pointer"
+        class="list-group-item"
+        *ngFor="let ingredient of ingredients; let i = index"
+        (click)="onIngredient(i)"
+      >
         {{ ingredient.name }} ( {{ ingredient.amount }})
       </li>
     </ul>
