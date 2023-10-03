@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
-import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,19 +9,25 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [];
-  constructor(private shoppingListService: ShoppingListService) {}
+  ingredients?: Ingredient[];
+  private igChangeSub?: Subscription;
 
-  ngOnInit(): void {
-    this.ingredients = this.shoppingListService.getIngredients();
-    this.shoppingListService.ingredientChanged.subscribe(
+  constructor(private shoppingService: ShoppingListService) {}
+
+  ngOnInit() {
+    this.ingredients = this.shoppingService.getIngredients();
+    this.igChangeSub = this.shoppingService.ingredientsChanged.subscribe(
       (ingredients: Ingredient[]) => {
         this.ingredients = ingredients;
       }
     );
   }
 
-  onIngredient(index: number) {
-    this.shoppingListService.getIngredient(index);
+  onEditItem(index: number) {
+    this.shoppingService.startedEditing.next(index);
+  }
+
+  ngOnDestroy(): void {
+    this.igChangeSub?.unsubscribe();
   }
 }
