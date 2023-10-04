@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" [routerLink]="'/'">Recipe Book</a>
+    <a class="navbar-brand" [routerLink]="'/'">FlavorFusion</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -34,5 +34,18 @@
         </li>
       </ul>
     </div>
+
+    <!-- Place the Sign Up button on the right -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="'signin'"
+          [routerLinkActive]="'active text-info'"
+          style="cursor: pointer"
+          >Login</a
+        >
+      </li>
+    </ul>
   </div>
 </nav>
