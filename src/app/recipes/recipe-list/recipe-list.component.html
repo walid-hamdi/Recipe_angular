@@ -7,7 +7,9 @@
     </div>
   </div>
 
-  <div class="row mt-4">
+  <div class="spinner-border m-5" role="status" *ngIf="!recipes"></div>
+
+  <div class="row mt-4" *ngIf="recipes">
     <div class="col-xs-12">
       <app-recipe-item
         *ngFor="let recipe of recipes; let i = index"
