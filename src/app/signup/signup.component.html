@@ -1,11 +1,15 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{ error }}
+      </div>
+
       <div class="card">
         <div class="card-header">Sign Up</div>
         <div class="card-body">
           <!-- Sign-up form -->
-          <form>
+          <form #form="ngForm" (ngSubmit)="submit(form)">
             <div class="form-group mt-2">
               <label for="username">Username</label>
               <input
@@ -13,6 +17,9 @@
                 class="form-control mt-2"
                 id="username"
                 placeholder="Enter your username"
+                name="username"
+                required
+                ngModel
               />
             </div>
             <div class="form-group mt-2">
@@ -22,6 +29,10 @@
                 class="form-control mt-2"
                 id="email"
                 placeholder="Enter your email"
+                name="email"
+                required
+                email
+                ngModel
               />
             </div>
             <div class="form-group mt-2">
@@ -31,6 +42,10 @@
                 class="form-control mt-2"
                 id="password"
                 placeholder="Enter your password"
+                name="password"
+                required
+                minlength="8"
+                ngModel
               />
             </div>
             <div class="form-group mt-2">
@@ -40,17 +55,29 @@
                 class="form-control mt-2"
                 id="confirmPassword"
                 placeholder="Confirm your password"
+                name="confirmPassword"
+                required
+                minlength="8"
+                ngModel
               />
             </div>
-            <button type="submit" class="mt-2 btn btn-primary btn-block">
+            <button
+              *ngIf="!isLoading"
+              [disabled]="!form.valid"
+              type="submit"
+              class="mt-2 btn btn-primary btn-block"
+            >
               Register
+            </button>
+            <button *ngIf="isLoading">
+              <div class="spinner-border" role="status"></div>
             </button>
           </form>
         </div>
         <div class="card-footer">
           <p class="mb-0">
             Already have an account?
-            <a [routerLink]="'/signin'" class="link-secondary">Sign In</a>
+            <a [routerLink]="'/signin'" class="link-secondary">Login </a>
           </p>
         </div>
       </div>
