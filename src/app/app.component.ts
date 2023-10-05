@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +7,9 @@ import { map } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
-  ngOnInit(): void {}
-
-  loadedFeature = 'recipe';
-
-  onNavigate(feature: string) {
-    this.loadedFeature = feature;
+  constructor(private authService: AuthService) {}
+  ngOnInit(): void {
+    this.authService.autoLogin();
   }
 }
 
@@ -23,4 +18,5 @@ export class AppComponent implements OnInit {
  understand passing data between parent <=> child clearly
  understand creating directors (listeners binding and host)
  understand dependency injection and services
-*/
+ understand observables
+ */
