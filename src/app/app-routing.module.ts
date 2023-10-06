@@ -8,12 +8,15 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
+import { CanAuth } from './auth/auth.guard';
+import { CannotAuth } from './auth/signin.guard';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
   {
     path: 'recipes',
     component: RecipesComponent,
+    canActivate: [CannotAuth],
     children: [
       { path: '', component: RecipeStartComponent },
       { path: 'new', component: RecipeEditComponent },
@@ -22,8 +25,9 @@ const appRoutes: Routes = [
     ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'signin', component: SigninComponent },
+  { path: 'signup', component: SignupComponent, canActivate: [CanAuth] },
+
+  { path: 'signin', component: SigninComponent, canActivate: [CanAuth] },
   {
     path: '**',
     redirectTo: 'not-found',
@@ -37,5 +41,6 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
+  providers: [CanAuth, CannotAuth],
 })
 export class AppRoutingModule {}
