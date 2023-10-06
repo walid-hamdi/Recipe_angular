@@ -20,6 +20,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
   private firebaseKey = 'AIzaSyA8Pzf8QllgP_CE7R4PUeEgHJalocjDaXs';
   user = new BehaviorSubject<User | null>(null);
+  tokenExpirationTimer: any = null;
 
   register(username: string, email: string, password: string) {
     return this.http
@@ -52,7 +53,7 @@ export class AuthService {
     );
     const user = new User(userId, email, tokenId, tokenExpirationDate);
     this.user.next(user);
-
+    this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify({ ...user }));
   }
 
@@ -75,22 +76,32 @@ export class AuthService {
         })
       );
   }
-
   autoLogin() {
-    const dataStoredInLocalStorage = JSON.parse(
-      localStorage.getItem('userData') ?? ''
-    );
+    const dataStoredInLocalStorage = localStorage.getItem('userData');
 
-    const { userId, email, _tokenId, _tokenExpirationDate } =
-      dataStoredInLocalStorage;
-    const user = new User(
-      userId,
-      email,
-      _tokenId,
-      new Date(_tokenExpirationDate)
-    );
+    if (dataStoredInLocalStorage) {
+      try {
+        const { userId, email, _tokenId, _tokenExpirationDate } = JSON.parse(
+          dataStoredInLocalStorage
+        );
 
-    if (user && user.token) this.user.next(user);
+        const user = new User(
+          userId,
+          email,
+          _tokenId,
+          new Date(_tokenExpirationDate)
+        );
+
+        if (user && user.token) {
+          this.user.next(user);
+          const expirationDuration =
+            new Date(_tokenExpirationDate).getTime() - new Date().getTime();
+          this.autoLogout(expirationDuration);
+        }
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    }
   }
 
   handleError(errorResponse: HttpErrorResponse) {
@@ -119,5 +130,16 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/signin']);
     localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 }
