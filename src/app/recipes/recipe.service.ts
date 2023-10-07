@@ -20,6 +20,10 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
   getRecipes() {
+    return this.recipes.slice();
+  }
+
+  fetchRecipes() {
     return this.httpService
       .get<Recipe[]>(
         'https://udemy-course-angular-4a0fe-default-rtdb.firebaseio.com/recipes.json'
