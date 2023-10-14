@@ -35,11 +35,20 @@ export class RecipeEditComponent {
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id!, this.recipeForm!.value);
     } else {
-      this.recipeService
-        .addRecipe(this.recipeForm!.value)
-        .subscribe((response) => {
-          alert('Recipe added successfully.');
-        });
+      //  TODO : add recipe with userID
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        const userId = userData.userId;
+
+        const recipeData = this.recipeForm!.value;
+
+        this.recipeService
+          .addRecipe({ ...recipeData, userId })
+          .subscribe((response) => {
+            alert('Recipe added successfully.');
+          });
+      }
     }
     this.onCancel();
   }

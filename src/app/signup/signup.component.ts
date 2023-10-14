@@ -11,9 +11,12 @@ import { Router } from '@angular/router';
 export class SignupComponent {
   isLoading = false;
   error: string | null = null;
+
   constructor(private authService: AuthService, private router: Router) {}
+
   submit(form: NgForm) {
     const { username, email, password } = form.value;
+
     this.isLoading = true;
     this.authService.register(username, email, password).subscribe(
       (responseAuth) => {

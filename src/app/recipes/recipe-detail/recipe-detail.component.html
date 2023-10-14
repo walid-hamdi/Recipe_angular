@@ -14,10 +14,16 @@
   <a (click)="onAddToShoppingList()" class="btn btn-outline-secondary me-1"
     >Add To Shopping List</a
   >
-  <a class="btn btn-outline-secondary me-1" (click)="onEditRecipe()"
+  <a
+    *ngIf="myRecipe"
+    class="btn btn-outline-secondary me-1"
+    (click)="onEditRecipe()"
     >Edit Recipe</a
   >
-  <a class="btn btn-outline-secondary me-1" (click)="onDeleteRecipe()"
+  <a
+    *ngIf="myRecipe"
+    class="btn btn-outline-secondary me-1"
+    (click)="onDeleteRecipe()"
     >Delete Recipe</a
   >
 </div>

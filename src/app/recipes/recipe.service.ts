@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { Subject, map } from 'rxjs';
+import { Subject, filter, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
@@ -8,6 +8,7 @@ import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import * as ShoppingListActions from '../shopping-list/store/shopping_list.actions';
 import { AppState } from '../shopping-list/store/shopping-list.reducer';
+import { DbService } from '../db/db.service';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
@@ -16,7 +17,7 @@ export class RecipeService {
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private httpService: HttpClient,
+    private dbService: DbService,
     private store: Store<AppState>
   ) {}
 
@@ -28,31 +29,20 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
+  fetchRecipesByUserId(userId: number) {
+    return this.dbService.getRecipe().subscribe((recipesData: Recipe[]) => {
+      const filteredRecipe = recipesData.filter(
+        (recipe) => recipe.userId === userId
+      );
+      console.log(filteredRecipe);
+      this.setRecipes(filteredRecipe);
+    });
+  }
+
   fetchRecipes() {
-    return this.httpService
-      .get<Recipe[]>(
-        'https://udemy-course-angular-4a0fe-default-rtdb.firebaseio.com/recipes.json'
-      )
-      .pipe(
-        map((responseData: Recipe[]) => {
-          const arrRecipes: Recipe[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              arrRecipes.push(responseData[key]);
-            }
-          }
-          //  in case if we don't add ingredients
-          return arrRecipes.map((recipe) => {
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : [],
-            };
-          });
-        })
-      )
-      .subscribe((recipesData: Recipe[]) => {
-        this.setRecipes(recipesData);
-      });
+    return this.dbService.getRecipe().subscribe((recipesData: Recipe[]) => {
+      this.setRecipes(recipesData);
+    });
   }
 
   getRecipe(index: number) {
@@ -65,10 +55,7 @@ export class RecipeService {
   }
 
   addRecipe(recipe: Recipe) {
-    return this.httpService.post(
-      'https://udemy-course-angular-4a0fe-default-rtdb.firebaseio.com/recipes.json',
-      recipe
-    );
+    return this.dbService.createRecipe(recipe);
   }
 
   updateRecipe(index: number, newRecipe: Recipe) {

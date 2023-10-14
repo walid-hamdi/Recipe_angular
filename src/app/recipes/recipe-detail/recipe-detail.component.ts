@@ -11,6 +11,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 export class RecipeDetailComponent implements OnInit {
   recipe?: Recipe;
   recipeId?: number;
+  myRecipe = false;
 
   constructor(
     private recipeService: RecipeService,
@@ -22,10 +23,19 @@ export class RecipeDetailComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.recipeId = +params.get('id')!;
       this.recipe = this.recipeService.getRecipe(this.recipeId);
+
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        const userId = userData.userId;
+        this.myRecipe = this.recipe?.userId === userId;
+      }
     });
   }
 
   onAddToShoppingList() {
+    console.log('Details : ', this.recipe?.userId);
+
     this.recipeService.addIngredientToShoppingList(this.recipe!.ingredients);
     this.router.navigate(['/shopping-list']);
   }
