@@ -2,32 +2,49 @@ import { Action } from '@ngrx/store';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
+export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
+export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
+export const START_EDIT = 'START_EDIT';
+export const STOP_EDIT = 'STOP_EDIT';
 
 export class AddIngredient implements Action {
   readonly type: string = ADD_INGREDIENT;
   constructor(public payload?: Ingredient) {}
 }
-export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
 
 export class AddIngredients implements Action {
   readonly type: string = ADD_INGREDIENTS;
   constructor(public payload?: Ingredient[]) {}
 }
-export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 
 export class UpdateIngredients implements Action {
   readonly type: string = UPDATE_INGREDIENT;
-  constructor(public payload?: { index: number; payload: Ingredient }) {}
+  constructor(public payload?: Ingredient) {}
 }
-export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 
 export class DeleteIngredients implements Action {
   readonly type: string = DELETE_INGREDIENT;
+
+  constructor(public payload?: number) {}
+}
+
+export class StartEdit implements Action {
+  readonly type: string = START_EDIT;
+
   constructor(public payload: number) {}
+}
+
+export class StopEdit implements Action {
+  readonly type: string = STOP_EDIT;
+
+  constructor(public payload?: number) {}
 }
 
 export type ShoppingListTypes =
   | AddIngredient
   | AddIngredients
   | UpdateIngredients
-  | DeleteIngredients;
+  | DeleteIngredients
+  | StartEdit
+  | StopEdit;
