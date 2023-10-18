@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../store/app.reducer';
+import { Login, Logout } from './store/auth.actions';
 
 interface ResponseData {
   idToken: string;
@@ -17,7 +21,11 @@ interface ResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
   private firebaseKey = 'AIzaSyA8Pzf8QllgP_CE7R4PUeEgHJalocjDaXs';
   user = new BehaviorSubject<User | null>(null);
   tokenExpirationTimer: any = null;
@@ -52,7 +60,16 @@ export class AuthService {
       new Date().getTime() + expiresIn * 1000
     );
     const user = new User(userId, email, tokenId, tokenExpirationDate);
-    this.user.next(user);
+
+    //this.user.next(user);
+    this.store.dispatch(
+      new Login({
+        email: user.email,
+        userId: user.userId,
+        token: user.token!,
+        expirationDate: tokenExpirationDate,
+      })
+    );
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify({ ...user }));
   }
@@ -93,7 +110,15 @@ export class AuthService {
         );
 
         if (user && user.token) {
-          this.user.next(user);
+          // this.user.next(user);
+          this.store.dispatch(
+            new Login({
+              email: user.email,
+              userId: user.userId,
+              token: user.token!,
+              expirationDate: _tokenExpirationDate,
+            })
+          );
           const expirationDuration =
             new Date(_tokenExpirationDate).getTime() - new Date().getTime();
           this.autoLogout(expirationDuration);
@@ -127,7 +152,8 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new Logout());
     this.router.navigate(['/signin']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
